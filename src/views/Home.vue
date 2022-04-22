@@ -8,6 +8,7 @@
     <Demo6></Demo6>
     <Demo7></Demo7>
     <Demo8></Demo8>
+    <Demo9></Demo9>
   </div>
 </template>
 
@@ -22,6 +23,7 @@ import Demo5 from './Demo5.vue'
 import Demo6 from './Demo6.vue'
 import Demo7 from './Demo7.vue'
 import Demo8 from './Demo8.vue'
+import Demo9 from './Demo9.vue'
 
 @Options({
   components: {
@@ -34,6 +36,7 @@ import Demo8 from './Demo8.vue'
     Demo6,
     Demo7,
     Demo8,
+    Demo9,
   },
 })
 export default class Home extends Vue {}
