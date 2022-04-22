@@ -1,5 +1,5 @@
 <template>
-	<div class="app">
+	<div class="demo13">
 		<h3>我是App组件（祖），{{name}}--{{price}}</h3>
 		<button @click="changezu">修改祖名</button>
 		<Child/>
@@ -10,7 +10,7 @@
 	import { reactive,toRefs,provide } from 'vue'
 	import Child from './components/Child.vue'
 	export default {
-		name:'App',
+		name:'provide 和 inject',
 		components:{Child},
 		setup(){
 			let car = reactive({name:'奔驰',price:'40W'})
@@ -24,7 +24,7 @@
 </script>
 
 <style>
-	.app{
+	.demo13{
 		background-color: gray;
 		padding: 10px;
 	}
