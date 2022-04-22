@@ -1,17 +1,36 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <Demo1></Demo1>
+    <Demo2></Demo2>
+    <Demo3></Demo3>
+    <Demo4></Demo4>
+    <Demo5></Demo5>
+    <Demo6></Demo6>
+    <Demo7></Demo7>
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
 import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import Demo1 from './Demo1.vue'
+import Demo2 from './Demo2.vue'
+import Demo3 from './Demo3.vue'
+import Demo4 from './Demo4.vue'
+import Demo5 from './Demo5.vue'
+import Demo6 from './Demo6.vue'
+import Demo7 from './Demo7.vue'
 
 @Options({
   components: {
     HelloWorld,
+    Demo1,
+    Demo2,
+    Demo3,
+    Demo4,
+    Demo5,
+    Demo6,
+    Demo7,
   },
 })
 export default class Home extends Vue {}
