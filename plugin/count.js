@@ -15,13 +15,17 @@ function genMap() {
     .set("vue$", "vue/dist/vue.esm.js");
   return alias;
 }
+
+
+var timeout
+
+let res = {}
+
 var num = true
 const alias = genMap();
-fs.writeFileSync("tmp.txt", "", { flag: "w" });
+fs.writeFileSync("tmp.json", "", { flag: "w" });
 // eslint-disable-next-line no-unused-vars
-module.exports = function (a, b) {
-  // console.log('aaaaaa', a);
-  // console.log('bbbbb',b);
+module.exports = function () {
   return {
     visitor: {
       ImportDeclaration(path, state) {
@@ -30,8 +34,8 @@ module.exports = function (a, b) {
           console.log('state', state);
           num = false
         }
+        // debugger
         let importModuleName = path.node.source.value;
-        // console.log('importModuleName', importModuleName);
         let found = false;
         alias.forEach((value, key) => {
           if (importModuleName.startsWith(`${key}/`)) {
@@ -46,7 +50,20 @@ module.exports = function (a, b) {
             return;
           }
         }
-        fs.writeFileSync("tmp.txt", `${importModuleName}\n`, { flag: "a+" });
+        if (timeout) {
+          clearTimeout(timeout)
+        }
+        console.log(importModuleName);
+        if (res[importModuleName]) {
+          res[importModuleName].push(state.filename)
+        } else {
+          res[importModuleName] = []
+          res[importModuleName].push(state.filename)
+        }
+        timeout = setTimeout(() => {
+          console.log(123456789, res);
+          fs.writeFileSync("tmp.json", `${JSON.stringify(res)}`, { flag: "a+" });
+        }, 3000);
       },
     },
     post(state) {
