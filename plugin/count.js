@@ -13,6 +13,9 @@ function genMap() {
 var timeout;
 
 let res = {};
+// 1.vscode全局匹配不出来（bug）
+// 2.异步导入的问题
+// 3.全路径改为简路径
 
 var num = true;
 const alias = genMap();
@@ -22,14 +25,14 @@ module.exports = function () {
     visitor: {
       ImportDeclaration(path, state) {
         // 如果是main.js或者main.ts文件，则清空tem.json文件，重新写入
-        // if (state.filename.endsWith("main.ts") || state.filename.endsWith("main.js")) {
+        if (state.filename.endsWith("main.ts") || state.filename.endsWith("main.js")) {
           fs.writeFileSync("tmp.json", "", { flag: "w" });
-        // }
+        }
         if (num) {
-          debugger
           console.log("path", path);
           console.log("state", state);
           num = false;
+          debugger
         }
         // debugger
         let importModuleName = path.node.source.value;
@@ -47,10 +50,18 @@ module.exports = function () {
             return;
           }
         }
+        // 如果是node_modules的文件的话，直接过滤掉
+        if (importModuleName.indexOf('node_modules') !== -1) {
+          return
+        }
+        // 判断是否是vue文件，不是的话，过滤掉
+        if (!importModuleName.endsWith('.vue') && !fs.existsSync(`${importModuleName}.vue`)) {
+          return
+        }
         if (timeout) {
           clearTimeout(timeout);
         }
-        console.log(importModuleName);
+        importModuleName = importModuleName.replace(/\//g, "\\");
         if (res[importModuleName] && (res[importModuleName].indexOf(state.filename) === -1)) {
           res[importModuleName].push(state.filename);
         } else {
