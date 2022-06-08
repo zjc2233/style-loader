@@ -20,6 +20,13 @@ module.exports = {
                 // 'vue-loader'
             ]
         },
+        {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: [{
+                loader: path.resolve(__dirname, 'loader/rely.js')
+            }]
+        }
         ]
       },
       plugins: [

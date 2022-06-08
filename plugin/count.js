@@ -20,7 +20,9 @@ let res = {};
 var num = true;
 const alias = genMap();
 // eslint-disable-next-line no-unused-vars
-module.exports = function () {
+module.exports = function (api, options) {
+  // console.log(api, options, dirname);
+  debugger
   return {
     visitor: {
       ImportDeclaration(path, state) {
@@ -62,6 +64,10 @@ module.exports = function () {
           clearTimeout(timeout);
         }
         importModuleName = importModuleName.replace(/\//g, "\\");
+        if (state.filename.includes('Demo11')) {
+          debugger
+          console.log('qwert');
+        }
         if (res[importModuleName] && (res[importModuleName].indexOf(state.filename) === -1)) {
           res[importModuleName].push(state.filename);
         } else {
@@ -69,9 +75,26 @@ module.exports = function () {
           res[importModuleName].push(state.filename);
         }
         timeout = setTimeout(() => {
-          console.log(123456789, res);
+          // console.log(123456789, res);
           fs.writeFileSync("tmp.json", `${JSON.stringify(res)}`, { flag: "a+" });
         }, 10000);
+      },
+      // importDefaultSpecifier(local) {
+      //   debugger
+      //   console.log(local);
+      // },
+      // importNamespaceSpecifier(local) {
+      //   debugger
+      //   console.log(local);
+      // },
+      // importSpecifier(local, imported) {
+      //   debugger
+      //   console.log(local, imported);
+      // }
+      BlockStatement(label, body){
+        console.log(label, body);
+        debugger
+        console.log('张三');
       },
     },
     post(state) {

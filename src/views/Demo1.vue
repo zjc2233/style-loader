@@ -7,6 +7,7 @@
 	<h3>爱好：{{person.hobby}}</h3>
 	<h3>测试的数据c：{{person.job.a.b.c}}</h3>
 	<button @click="changeInfo">修改人的信息</button>
+	<asyncComponent></asyncComponent>
 </template>
 
 <script>
@@ -19,6 +20,9 @@ import Demo12 from './Demo12.vue'
 	import {reactive} from 'vue'
 	export default {
 		name: 'reactive函数',
+		components: {
+			asyncComponent: () => import('./Demo11.vue')
+		},
 		setup(){
 			//数据
 			let person = reactive({
