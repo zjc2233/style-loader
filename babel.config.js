@@ -1,8 +1,8 @@
-const counts = require('./plugin/count')
+const vueComponentUsage = require('./plugin/vueComponentUsage')
 const index = require('./plugin/index')
 module.exports = {
   presets: [
     '@vue/cli-plugin-babel/preset'
   ],
-  plugins: [counts]
+  plugins: [vueComponentUsage({time: 20000})]
 }

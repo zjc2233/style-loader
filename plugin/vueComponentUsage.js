@@ -2,7 +2,6 @@ const path = require("path");
 const fs = require("fs");
 const { resolve, dirname } = path;
 
-console.log(resolve());
 var timeout;
 
 function genMap() {
@@ -42,32 +41,28 @@ function importModuleNameFormat(path, state, importModuleName) {
 }
 
 // 写入tmp.json文件
-function writeTem(path, state, importModuleName) {
+function writeTem(path, state, importModuleName, options) {
   if (timeout) {
     clearTimeout(timeout);
   }
-  importModuleName = importModuleName.replace(/\\/g, "/");
-  if (res[importModuleName] && res[importModuleName].indexOf(state.filename) === -1) {
-    res[importModuleName].push(state.filename);
+  importModuleName = importModuleName.replace(/\\/g, "/").replace(resolve(), '');
+  let fileUrl = state.filename.replace(resolve(), '')
+  if (res[importModuleName] && res[importModuleName].indexOf(fileUrl) === -1) {
+    res[importModuleName].push(fileUrl);
   } else {
     res[importModuleName] = [];
-    res[importModuleName].push(state.filename);
+    res[importModuleName].push(fileUrl);
   }
   timeout = setTimeout(() => {
     fs.writeFileSync("tmp.json", `${JSON.stringify(res)}`, { flag: "a+" });
-  }, 10000);
+  }, options.time || 10000);
 }
 
-
+// 存储最后输出到结果Í
 let res = {};
-// 1.vscode全局匹配不出来（bug）
-// 2.异步导入的问题
-// 3.全路径改为简路径
-
 const alias = genMap();
-// eslint-disable-next-line no-unused-vars
-module.exports = function (api, options) {
-  // console.log(api, options, dirname);
+
+module.exports = function (options) {
   return {
     visitor: {
       ImportDeclaration(path, state) {
@@ -82,7 +77,7 @@ module.exports = function (api, options) {
         if (!importModuleName.endsWith(".vue") && !fs.existsSync(`${importModuleName}.vue`)) {
           return;
         }
-        writeTem(path, state, importModuleName)
+        writeTem(path, state, importModuleName, options)
       },
       Import(path, state) {
         clearTmp(state);
@@ -96,11 +91,8 @@ module.exports = function (api, options) {
         if (!importModuleName.endsWith(".vue") && !fs.existsSync(`${importModuleName}.vue`)) {
           return;
         }
-        writeTem(path, state, importModuleName)
+        writeTem(path, state, importModuleName, options)
       },
-    },
-    post(state) {
-      // console.log('post');
     },
   };
 };

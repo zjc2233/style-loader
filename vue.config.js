@@ -1,6 +1,6 @@
 const path = require("path");
 const { VueLoaderPlugin } = require('vue-loader');
-const counts = require('./plugin/count')
+const counts = require('./plugin/vueComponentUsage')
 
 module.exports = {
     publicPath: './',
