@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@babel/parser": "^7.18.4",
-    "@babel/traverse": "^7.18.2",
+    "@babel/traverse": "^7.7.2",
     "@vue/cli-plugin-babel": "~4.5.13",
     "@vue/cli-plugin-router": "~4.5.13",
     "@vue/cli-plugin-typescript": "~4.5.13",

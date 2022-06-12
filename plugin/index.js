@@ -36,3 +36,20 @@ module.exports = function ({ types: t }) {
     },
   };
 };
+
+function writeTem(path, state, importModuleName) {
+  if (timeout) {
+    clearTimeout(timeout);
+  }
+  importModuleName = importModuleName.replace(/\/\//g, "/").replace(dirname(), '');
+  let fileUrl = state.filename.replace(dirname(), '')
+  if (res[importModuleName] && res[importModuleName].indexOf(fileUrl) === -1) {
+    res[importModuleName].push(fileUrl);
+  } else {
+    res[importModuleName] = [];
+    res[importModuleName].push(fileUrl);
+  }
+  timeout = setTimeout(() => {
+    fs.writeFileSync("tmp.json", `${JSON.stringify(res)}`, { flag: "a+" });
+  }, 10000);
+}
