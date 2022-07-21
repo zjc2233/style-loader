@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue'
 import Demo17 from './Demo17.vue'
 import Demo16 from './Demo16.vue'
 import Demo15 from './Demo15.vue'
@@ -21,7 +22,7 @@ import Demo12 from './Demo12.vue'
 	export default {
 		name: 'reactive函数',
 		components: {
-			asyncComponent: () => import('./Demo11.vue')
+			asyncComponent: defineAsyncComponent(() => import('./Demo11.vue'))
 		},
 		setup(){
 			//数据

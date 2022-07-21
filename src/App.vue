@@ -1,8 +1,8 @@
 <template>
   <div id="nav">
-    <router-link to="/" class="home">Home</router-link> |
-    <router-link to="/about" style="font-size: 10px; color: #666;">About</router-link>
-    <router-link to="/about" :style="{'font-size': num + 'px'}">aaaaa</router-link>
+    <router-link to="/home" class="home">Home</router-link> 
+    <router-link to="/about" style="font-size: 16px; color: #666;">About</router-link>
+    <!-- <router-link to="/about" :style="{'font-size': num + 'px'}">aaaaa</router-link> -->
   </div>
   <div class="router--view">
     <router-view/>
@@ -27,6 +27,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  font-size: 16px;
 }
 
 #nav {
